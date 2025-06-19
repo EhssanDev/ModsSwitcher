@@ -261,6 +261,30 @@
             color: white;
         }
 
+        /* Comments Section Styles */
+        .comments-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .comments-section h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .giscus {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
         footer {
             background: rgba(0, 0, 0, 0.2);
             color: white;
@@ -328,6 +352,14 @@
                 right: 10px;
                 left: 10px;
                 width: auto;
+            }
+
+            .comments-section {
+                padding: 2rem;
+            }
+
+            .giscus {
+                padding: 1rem;
             }
         }
 
@@ -410,6 +442,7 @@
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Donation</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#comments">Comments</a></li>
             </ul>
         </nav>
     </header>
@@ -529,6 +562,14 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section" id="comments">
+                <h2>💬 Community Comments</h2>
+                <div class="giscus">
+                    <!-- Giscus comments will be loaded here -->
+                </div>
+            </div>
         </section>
     </main>
 
@@ -537,6 +578,23 @@
             <p>&copy; 2025 Mods Switcher for GTA5/RDR2. All rights reserved. | <a href="#" style="color: white;">Privacy Policy</a> | <a href="#" style="color: white;">Terms of Service</a></p>
         </div>
     </footer>
+
+    <!-- Giscus Comments Script -->
+    <script src="https://giscus.app/client.js"
+            data-repo="EhssanDev/ModsSwitcher"
+            data-repo-id="R_kgDOO-CZzg"
+            data-category="General"
+            data-category-id="DIC_kwDOO-CZzs4Crtzb"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
 
     <script>
         // Download simulation function without counter increment
