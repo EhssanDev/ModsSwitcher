@@ -481,6 +481,32 @@
             font-style: italic;
             padding: 2rem;
         }
+
+        /* Hyvor Talk Comments Styling */
+        .hyvor-comments-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hyvor-comments-container h2 {
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        /* Style the Hyvor Talk widget */
+        hyvor-talk-comments {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 2rem;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -502,6 +528,7 @@
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Donation</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#comments">Comments</a></li>
             </ul>
         </nav>
     </header>
@@ -616,8 +643,18 @@
                 </div>
             </div>
 
-            <!-- Comments Section -->
-            <div class="comments-section" id="comments">
+            <!-- Hyvor Talk Comments Section -->
+            <div class="hyvor-comments-container" id="comments">
+                <h2>💬 Community Discussion</h2>
+                <script async src="https://talk.hyvor.com/embed/embed.js" type="module"></script>
+                <hyvor-talk-comments
+                    website-id="13506"
+                    page-id="mods-switcher-main"
+                ></hyvor-talk-comments>
+            </div>
+
+            <!-- Original Comments Section (kept as backup/alternative) -->
+            <div class="comments-section" id="legacy-comments" style="display: none;">
                 <h2>💬 User Comments & Feedback</h2>
                 
                 <div class="comment-form">
