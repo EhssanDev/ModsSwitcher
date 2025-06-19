@@ -806,27 +806,5 @@
             return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
     </script>
-    import React from 'react';
-import commentBox from 'commentbox.io';
-
-class PageWithComments extends React.Component {
-
-    componentDidMount() {
-
-        this.removeCommentBox = commentBox('5710196022181888-proj');
-    }
-
-    componentWillUnmount() {
-
-        this.removeCommentBox();
-    }
-
-    render() {
-
-        return (
-            <div className="commentbox" />
-        );
-    }
-}
 </body>
 </html>
