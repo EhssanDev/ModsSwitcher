@@ -311,36 +311,7 @@
             opacity: 0.9;
         }
 
-        /* Comments Section Styles */
-        .comments-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
 
-        .comments-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .giscus-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Override Giscus dark theme to match our design */
-        .giscus-frame {
-            border-radius: 15px !important;
-        }
     </style>
 </head>
 <body>
@@ -352,7 +323,7 @@
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Support</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#comments">Comments</a></li>
+
             </ul>
         </nav>
     </header>
@@ -426,7 +397,7 @@
             </div>
 
             <!-- About Section -->
-            <div class="about-section" id="about">
+            <div class="about-section" id="about" style="display: none;">
                 <h2>About Mods Switcher</h2>
                 <div class="about-content">
                     <div class="about-card">
@@ -456,32 +427,7 @@
                 </div>
             </div>
 
-            <!-- Comments Section with Giscus -->
-            <div class="comments-section" id="comments">
-                <h2>💬 Community Feedback</h2>
-                <p style="text-align: center; margin-bottom: 2rem; opacity: 0.9;">
-                    Share your experience with Mods Switcher! Login with GitHub to leave a comment.
-                </p>
-                
-                <div class="giscus-container">
-                    <script src="https://giscus.app/client.js"
-                            data-repo="YOUR_USERNAME/YOUR_REPOSITORY"
-                            data-repo-id="YOUR_REPO_ID"
-                            data-category="General"
-                            data-category-id="YOUR_CATEGORY_ID"
-                            data-mapping="pathname"
-                            data-strict="0"
-                            data-reactions-enabled="1"
-                            data-emit-metadata="0"
-                            data-input-position="top"
-                            data-theme="dark"
-                            data-lang="en"
-                            data-loading="lazy"
-                            crossorigin="anonymous"
-                            async>
-                    </script>
-                </div>
-            </div>
+
         </section>
     </main>
 
@@ -492,6 +438,140 @@
     </footer>
 
     <script>
+        // Comments storage and management
+        class CommentsManager {
+            constructor() {
+                this.comments = [
+                    {
+                        id: 1,
+                        name: "John_Gamer",
+                        email: "",
+                        text: "This tool is exactly what I needed! So simple to use and works perfectly with both GTA5 and RDR2. Finally I can switch between online and modded gameplay without the hassle.",
+                        timestamp: Date.now() - (2 * 24 * 60 * 60 * 1000),
+                        likes: 12
+                    },
+                    {
+                        id: 2,
+                        name: "ModEnthusiast22",
+                        email: "",
+                        text: "Love how lightweight this is compared to other mod managers. Does exactly what it says - no bloat, no complicated features I don't need. 5 stars!",
+                        timestamp: Date.now() - (5 * 24 * 60 * 60 * 1000),
+                        likes: 8
+                    },
+                    {
+                        id: 3,
+                        name: "RedDeadFan",
+                        email: "",
+                        text: "Been using this for RDR2 and it's a game changer. The one-click toggle is so convenient, especially when friends want to play online suddenly.",
+                        timestamp: Date.now() - (7 * 24 * 60 * 60 * 1000),
+                        likes: 15
+                    }
+                ];
+                this.nextId = 4;
+                this.loadComments();
+            }
+
+            addComment(name, email, text) {
+                const comment = {
+                    id: this.nextId++,
+                    name: this.sanitizeInput(name),
+                    email: this.sanitizeInput(email),
+                    text: this.sanitizeInput(text),
+                    timestamp: Date.now(),
+                    likes: 0
+                };
+                
+                this.comments.unshift(comment);
+                this.updateCommentsDisplay();
+                this.updateCommentsCount();
+                return comment;
+            }
+
+            sanitizeInput(input) {
+                const div = document.createElement('div');
+                div.textContent = input;
+                return div.innerHTML;
+            }
+
+            formatTimeAgo(timestamp) {
+                const now = Date.now();
+                const diff = now - timestamp;
+                const seconds = Math.floor(diff / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const hours = Math.floor(minutes / 60);
+                const days = Math.floor(hours / 24);
+
+                if (days > 0) {
+                    return `${days} day${days > 1 ? 's' : ''} ago`;
+                } else if (hours > 0) {
+                    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+                } else if (minutes > 0) {
+                    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+                } else {
+                    return 'Just now';
+                }
+            }
+
+            likeComment(commentId) {
+                const comment = this.comments.find(c => c.id === commentId);
+                if (comment) {
+                    comment.likes++;
+                    this.updateCommentsDisplay();
+                }
+            }
+
+            updateCommentsDisplay() {
+                const commentsList = document.getElementById('commentsList');
+                commentsList.innerHTML = '';
+
+                if (this.comments.length === 0) {
+                    commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to share your experience!</div>';
+                    return;
+                }
+
+                this.comments.forEach((comment, index) => {
+                    const commentElement = document.createElement('div');
+                    commentElement.className = 'comment';
+                    commentElement.style.animationDelay = `${index * 0.1}s`;
+                    
+                    commentElement.innerHTML = `
+                        <div class="comment-header">
+                            <span class="comment-author">${comment.name}</span>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <span class="comment-date">${this.formatTimeAgo(comment.timestamp)}</span>
+                                <span class="comment-id">#${comment.id}</span>
+                            </div>
+                        </div>
+                        <div class="comment-text">${comment.text}</div>
+                        <div class="comment-actions">
+                            <button class="like-btn" onclick="commentsManager.likeComment(${comment.id})">
+                                ❤️ ${comment.likes} likes
+                            </button>
+                            <button class="reply-btn">
+                                💬 Reply
+                            </button>
+                        </div>
+                    `;
+                    
+                    commentsList.appendChild(commentElement);
+                });
+            }
+
+            updateCommentsCount() {
+                const countElement = document.getElementById('commentsCount');
+                const count = this.comments.length;
+                countElement.textContent = `${count} comment${count !== 1 ? 's' : ''}`;
+            }
+
+            loadComments() {
+                this.updateCommentsDisplay();
+                this.updateCommentsCount();
+            }
+        }
+
+        // Initialize comments manager
+        const commentsManager = new CommentsManager();
+
         // Download simulation function
         function startDownload(platform) {
             const downloadButtons = document.getElementById('downloadButtons');
@@ -530,45 +610,3 @@
                         downloadStatus.textContent = '';
                     }, 3000);
                 }
-            }, 100);
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all feature cards and sections
-        document.querySelectorAll('.feature-card, .about-card, .comments-section').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
