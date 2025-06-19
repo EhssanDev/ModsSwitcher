@@ -93,6 +93,39 @@
             margin-right: auto;
         }
 
+        /* YouTube Channel Section */
+        .youtube-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .youtube-btn {
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem;
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .youtube-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
+        }
+
         /* Image Styles */
         .hero-image {
             max-width: 100%;
@@ -261,14 +294,41 @@
             color: white;
         }
 
-        /* Comments Section Styles */
+        /* Enhanced Comments Section Styles */
         .comments-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comments-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(102, 126, 234, 0.1) 0%, 
+                rgba(118, 75, 162, 0.1) 25%, 
+                rgba(102, 126, 234, 0.1) 50%, 
+                rgba(118, 75, 162, 0.1) 75%, 
+                rgba(102, 126, 234, 0.1) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
         }
 
         .comments-section h2 {
@@ -276,13 +336,20 @@
             text-align: center;
             margin-bottom: 2rem;
             font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .giscus {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
         }
 
         footer {
@@ -359,7 +426,11 @@
             }
 
             .giscus {
-                padding: 1rem;
+                padding: 1.5rem;
+            }
+
+            .youtube-section {
+                padding: 1.5rem;
             }
         }
 
@@ -442,6 +513,7 @@
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Donation</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#youtube">YouTube</a></li>
                 <li><a href="#comments">Comments</a></li>
             </ul>
         </nav>
@@ -486,6 +558,18 @@
                 </div>
                 
                 <div id="downloadStatus" style="margin-top: 1rem; font-weight: bold;"></div>
+            </div>
+
+            <!-- YouTube Channel Section -->
+            <div class="youtube-section" id="youtube">
+                <h2 style="color: white; margin-bottom: 1rem; font-size: 2rem;">📺 Follow My YouTube Channel</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem; font-size: 1.1rem;">
+                    Subscribe for tutorials, updates, and more gaming content!
+                </p>
+                <a href="https://www.youtube.com/@EhssanDev" target="_blank" class="youtube-btn">
+                    <span style="font-size: 1.3rem;">📺</span>
+                    Subscribe to EhssanDev
+                </a>
             </div>
 
             <div class="download-info">
@@ -563,7 +647,7 @@
                 </div>
             </div>
 
-            <!-- Comments Section -->
+            <!-- Enhanced Comments Section -->
             <div class="comments-section" id="comments">
                 <h2>💬 Community Comments</h2>
                 <div class="giscus">
