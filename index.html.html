@@ -126,6 +126,88 @@
             box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
         }
 
+        /* Ko-fi Donation Section */
+        .donation-section {
+            background: linear-gradient(135deg, rgba(255, 205, 84, 0.15) 0%, rgba(255, 205, 84, 0.08) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid rgba(255, 205, 84, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255, 205, 84, 0.1) 0%, 
+                rgba(255, 87, 51, 0.1) 50%, 
+                rgba(255, 205, 84, 0.1) 100%);
+            background-size: 200% 200%;
+            animation: donationGlow 4s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes donationGlow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .donation-section h2 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .donation-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .kofi-btn {
+            background: linear-gradient(45deg, #ff5f5f, #ff3a3a);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem;
+            box-shadow: 0 10px 20px rgba(255, 95, 95, 0.3);
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        .kofi-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 95, 95, 0.4);
+            background: linear-gradient(45deg, #ff4444, #ff2222);
+        }
+
+        .kofi-btn:active {
+            transform: translateY(-1px);
+        }
+
         /* Image Styles */
         .hero-image {
             max-width: 100%;
@@ -429,7 +511,7 @@
                 padding: 1.5rem;
             }
 
-            .youtube-section {
+            .youtube-section, .donation-section {
                 padding: 1.5rem;
             }
         }
@@ -511,7 +593,7 @@
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#download">Download</a></li>
-                <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Donation</a></li>
+                <li><a href="#donation">Donation</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#youtube">YouTube</a></li>
                 <li><a href="#comments">Comments</a></li>
@@ -531,7 +613,7 @@
         <section class="container">
             <div class="stats" id="stats">
                 <div class="stat-item download-count-highlight">
-                    <span class="stat-number">+15,000</span>
+                    <span class="stat-number">+5,000</span>
                     <span class="stat-label">Total Downloads</span>
                 </div>
                 <div class="stat-item">
@@ -569,6 +651,18 @@
                 <a href="https://www.youtube.com/@EhssanDev" target="_blank" class="youtube-btn">
                     <span style="font-size: 1.3rem;">📺</span>
                     Subscribe to EhssanDev
+                </a>
+            </div>
+
+            <!-- Ko-fi Donation Section -->
+            <div class="donation-section" id="donation">
+                <h2>☕ Support My Work</h2>
+                <p>
+                    If you find Mods Switcher helpful, consider buying me a coffee! Your support helps me continue developing free tools and creating content for the gaming community.
+                </p>
+                <a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank" class="kofi-btn">
+                    <span style="font-size: 1.3rem;">☕</span>
+                    Buy Me a Coffee
                 </a>
             </div>
 
@@ -712,62 +806,4 @@
                     downloadStatus.textContent = 'Finalizing installation package...';
                 } else if (progress === 100) {
                     downloadStatus.textContent = '✅ Download completed successfully!';
-                    downloadStatus.style.color = '#28a745';
-                    clearInterval(interval);
-                    
-                    // Create and trigger download of a dummy file
-                    const link = document.createElement('a');
-                    link.href = 'ModsSwitcher.rar';
-                    link.download = `ModsSwitcher.rar`;
-                    link.click();
-                    
-                    setTimeout(() => {
-                        downloadButtons.style.display = 'block';
-                        downloadProgress.style.display = 'none';
-                        progressBar.style.width = '0%';
-                        downloadStatus.textContent = '';
-                    }, 3000);
-                }
-            }, 100);
-        }
-
-        // Show download notification
-        function showDownloadNotification() {
-            const notification = document.getElementById('downloadNotification');
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideIn 0.5s ease-out reverse';
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                    notification.style.animation = 'slideIn 0.5s ease-out';
-                }, 500);
-            }, 3000);
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    // Hide all sections first
-                    document.querySelectorAll('.about-section').forEach(section => {
-                        section.style.display = 'none';
-                    });
-                    
-                    // Show target section if it's about
-                    if (this.getAttribute('href') === '#about') {
-                        target.style.display = 'block';
-                    }
-                    
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+                    downloadStatus
