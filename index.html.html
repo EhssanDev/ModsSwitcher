@@ -93,6 +93,25 @@
             margin-right: auto;
         }
 
+        /* Image Styles */
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin: 2rem 0;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin: 1rem 0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
         .download-section {
             background: white;
             border-radius: 20px;
@@ -399,6 +418,9 @@
         <section class="hero container">
             <h1>Mods Switcher for GTA5/RDR2</h1>
             <p>Simply turn your mods on or off for Grand Theft Auto 5 and Red Dead Redemption 2. No complicated setup - just easy mod management with the click of a button.</p>
+            
+            <!-- First Image: Hero Section -->
+            <img src="screenshot1.jpg" alt="Mods Switcher Interface Screenshot" class="hero-image">
         </section>
 
         <section class="container">
@@ -416,6 +438,9 @@
             <div class="download-section" id="download">
                 <h2>Download Mods Switcher</h2>
                 <p>Simple mod management for GTA5 and RDR2. Turn your mods on and off with just one click!</p>
+                
+                <!-- Second Image: Download Section -->
+                <img src="demo.jpg" alt="Mods Switcher Demo in Action" class="feature-image">
                 
                 <div class="download-progress" id="downloadProgress">
                     <div class="progress-bar" id="progressBar"></div>
