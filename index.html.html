@@ -1,269 +1,810 @@
-import React, { useState, useEffect, useRef } from 'react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"><link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mods Switcher for GTA5/RDR2 - Download Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-// CommentBox.io Integration Component
-const CommentBoxComponent = () => {
-  const commentBoxRef = useRef(null);
-  const removeCommentBoxRef = useRef(null);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
 
-  useEffect(() => {
-    // Load CommentBox.io script
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/commentbox.io/dist/commentBox.min.js';
-    script.async = true;
-    
-    script.onload = () => {
-      if (window.commentBox && commentBoxRef.current) {
-        removeCommentBoxRef.current = window.commentBox('5710196022181888-proj', {
-          createBoxUrl: function(boxId, pageLocation) {
-            pageLocation.hash = '';
-            pageLocation.search = '';
-            return pageLocation.href;
-          }
-        });
-      }
-    };
-    
-    document.head.appendChild(script);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    return () => {
-      if (removeCommentBoxRef.current) {
-        removeCommentBoxRef.current();
-      }
-      // Clean up script
-      const existingScript = document.querySelector('script[src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"]');
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-  return <div className="commentbox" ref={commentBoxRef} />;
-};
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-const ModsSwitcher = () => {
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadStatus, setDownloadStatus] = useState('');
-  const [showNotification, setShowNotification] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
 
-  const startDownload = (platform) => {
-    setShowNotification(true);
-    setIsDownloading(true);
-    setDownloadProgress(0);
-    setDownloadStatus('Preparing Mods Switcher download...');
-    
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += Math.random() * 15;
-      if (progress > 100) progress = 100;
-      
-      setDownloadProgress(progress);
-      
-      if (progress < 30) {
-        setDownloadStatus('Initializing download...');
-      } else if (progress < 60) {
-        setDownloadStatus('Downloading Mods Switcher...');
-      } else if (progress < 90) {
-        setDownloadStatus('Finalizing installation package...');
-      } else if (progress >= 100) {
-        setDownloadStatus('✅ Download completed successfully!');
-        clearInterval(interval);
-        
-        // Create and trigger download of a dummy file
-        const link = document.createElement('a');
-        link.href = 'data:text/plain;charset=utf-8,ModsSwitcher%20-%20Placeholder%20File';
-        link.download = 'ModsSwitcher.rar';
-        link.click();
-        
-        setTimeout(() => {
-          setIsDownloading(false);
-          setDownloadProgress(0);
-          setDownloadStatus('');
-        }, 3000);
-      }
-    }, 100);
-    
-    setTimeout(() => setShowNotification(false), 3000);
-  };
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
 
-  const scrollToSection = (sectionId) => {
-    if (sectionId === 'about') {
-      setShowAbout(true);
-    }
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
-  };
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600">
-      {/* Download Notification */}
-      {showNotification && (
-        <div className="fixed top-24 right-5 bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-lg shadow-2xl z-50 animate-slide-in-right">
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🎉</span>
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 1rem;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .secondary-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .download-count-highlight {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            }
+            50% {
+                box-shadow: 0 15px 30px rgba(40, 167, 69, 0.6);
+            }
+            100% {
+                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            }
+        }
+
+        .download-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .system-requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .requirement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            color: white;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .download-progress {
+            display: none;
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .download-notification {
+            display: none;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .download-section {
+                padding: 2rem;
+            }
+
+            .download-notification {
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+            50% {
+                box-shadow: 0 15px 30px rgba(102, 126, 234, 0.6);
+            }
+            100% {
+                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            }
+        }
+
+        /* About Section Styles */
+        .about-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .about-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Comments Section Styles */
+        .comments-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .comments-section h2 {
+            color: #333;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .comment-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .comment-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .no-comments {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="download-notification" id="downloadNotification">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">🎉</span>
             <div>
-              <div className="font-bold">Download Started!</div>
-              <div className="text-sm opacity-90">Thank you for downloading</div>
+                <div style="font-weight: bold;">Download Started!</div>
+                <div style="font-size: 0.9rem;">Thank you for downloading</div>
             </div>
-          </div>
         </div>
-      )}
+    </div>
 
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-white bg-opacity-10 backdrop-blur-lg border-b border-white border-opacity-20 z-40">
-        <nav className="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold text-white no-underline">
-            🎮 Mods Switcher
-          </a>
-          <ul className="hidden md:flex list-none gap-8">
-            <li><a href="#features" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }} className="text-white no-underline hover:opacity-80 transition-opacity">Features</a></li>
-            <li><a href="#download" onClick={(e) => { e.preventDefault(); scrollToSection('download'); }} className="text-white no-underline hover:opacity-80 transition-opacity">Download</a></li>
-            <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank" className="text-white no-underline hover:opacity-80 transition-opacity">Donation</a></li>
-            <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} className="text-white no-underline hover:opacity-80 transition-opacity">About</a></li>
-          </ul>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">🎮 Mods Switcher</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#download">Download</a></li>
+                <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Donation</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
         </nav>
-      </header>
+    </header>
 
-      {/* Main Content */}
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="text-center py-16 text-white max-w-6xl mx-auto px-5">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-            Mods Switcher for GTA5/RDR2
-          </h1>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            Simply turn your mods on or off for Grand Theft Auto 5 and Red Dead Redemption 2. No complicated setup - just easy mod management with the click of a button.
-          </p>
+    <main>
+        <section class="hero container">
+            <h1>Mods Switcher for GTA5/RDR2</h1>
+            <p>Simply turn your mods on or off for Grand Theft Auto 5 and Red Dead Redemption 2. No complicated setup - just easy mod management with the click of a button.</p>
         </section>
 
-        <div className="max-w-6xl mx-auto px-5">
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white border-opacity-20 hover:transform hover:-translate-y-1 transition-all shadow-xl">
-              <span className="block text-4xl font-bold text-green-300 mb-2">+15,000</span>
-              <span className="text-lg opacity-90">Total Downloads</span>
+        <section class="container">
+            <div class="stats" id="stats">
+                <div class="stat-item download-count-highlight">
+                    <span class="stat-number">+15,000</span>
+                    <span class="stat-label">Total Downloads</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">9.70MB</span>
+                    <span class="stat-label">File Size</span>
+                </div>
             </div>
-            <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white border-opacity-20 hover:transform hover:-translate-y-1 transition-all">
-              <span className="block text-4xl font-bold mb-2">9.70MB</span>
-              <span className="text-lg opacity-90">File Size</span>
+
+            <div class="download-section" id="download">
+                <h2>Download Mods Switcher</h2>
+                <p>Simple mod management for GTA5 and RDR2. Turn your mods on and off with just one click!</p>
+                
+                <div class="download-progress" id="downloadProgress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div id="downloadButtons">
+                    <button class="download-btn pulse" onclick="startDownload('windows')">
+                        🪟 Download Mods Switcher
+                    </button>
+                </div>
+                
+                <div id="downloadStatus" style="margin-top: 1rem; font-weight: bold;"></div>
             </div>
-          </div>
 
-          {/* Download Section */}
-          <section id="download" className="bg-white rounded-3xl p-12 mb-12 text-center shadow-2xl">
-            <h2 className="text-3xl font-bold mb-4 text-gray-800">Download Mods Switcher</h2>
-            <p className="text-lg text-gray-600 mb-8">Simple mod management for GTA5 and RDR2. Turn your mods on and off with just one click!</p>
-            
-            {isDownloading && (
-              <div className="w-full h-5 bg-gray-200 rounded-full overflow-hidden mb-6">
-                <div 
-                  className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-300"
-                  style={{ width: `${downloadProgress}%` }}
-                ></div>
-              </div>
-            )}
-            
-            {!isDownloading ? (
-              <button 
-                onClick={() => startDownload('windows')}
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-12 py-4 text-xl rounded-full border-none cursor-pointer transition-all hover:transform hover:-translate-y-1 hover:shadow-2xl shadow-lg animate-pulse"
-              >
-                🪟 Download Mods Switcher
-              </button>
-            ) : (
-              <div className="text-indigo-600 font-bold text-lg">{downloadStatus}</div>
-            )}
-          </section>
-
-          {/* System Requirements */}
-          <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 mb-12 border border-white border-opacity-20">
-            <h3 className="text-2xl font-bold text-white mb-6">📋 System Requirements</h3>
-            <div className="bg-white bg-opacity-20 p-6 rounded-xl">
-              <div className="text-white">
-                <strong>Windows</strong><br />
-                Windows 10 or later<br />
-                GTA5 and/or RDR2 installed
-              </div>
+            <div class="download-info">
+                <h3 style="color: white; margin-bottom: 1rem;">📋 System Requirements</h3>
+                <div class="system-requirements">
+                    <div class="requirement-item">
+                        <strong>Windows</strong><br>
+                        Windows 10 or later<br>
+                        GTA5 and/or RDR2 installed
+                    </div>
+                </div>
             </div>
-          </div>
 
-          {/* Features */}
-          <section id="features" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {[
-              { icon: '🎮', title: 'Multi-Game Support', desc: 'Works with both GTA5 and RDR2. One simple tool for both games.' },
-              { icon: '🔘', title: 'Simple On/Off Toggle', desc: 'Turn your mods on or off with a single click. No complicated configurations needed.' },
-              { icon: '⚡', title: 'Instant Results', desc: 'Changes take effect immediately. No restart required, just toggle and play.' },
-              { icon: '🎯', title: 'Easy to Use', desc: 'Clean, simple interface. Perfect for beginners who just want mods on or off.' },
-              { icon: '💾', title: 'Safe Operation', desc: 'Never permanently deletes your mods. Just enables or disables them safely.' },
-              { icon: '🚀', title: 'Lightweight', desc: 'Tiny footprint, minimal system resources. Just does what you need, nothing more.' }
-            ].map((feature, index) => (
-              <div key={index} className="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-6 text-center text-white border border-white border-opacity-20 hover:transform hover:-translate-y-2 transition-all">
-                <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="opacity-90">{feature.desc}</p>
-              </div>
-            ))}
-          </section>
+            <div class="features" id="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>Multi-Game Support</h3>
+                    <p>Works with both GTA5 and RDR2. One simple tool for both games.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔘</div>
+                    <h3>Simple On/Off Toggle</h3>
+                    <p>Turn your mods on or off with a single click. No complicated configurations needed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Changes take effect immediately. No restart required, just toggle and play.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Easy to Use</h3>
+                    <p>Clean, simple interface. Perfect for beginners who just want mods on or off.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Safe Operation</h3>
+                    <p>Never permanently deletes your mods. Just enables or disables them safely.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Lightweight</h3>
+                    <p>Tiny footprint, minimal system resources. Just does what you need, nothing more.</p>
+                </div>
+            </div>
 
-          {/* About Section */}
-          {showAbout && (
-            <section id="about" className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-12 mb-12 text-white border border-white border-opacity-20">
-              <h2 className="text-4xl font-bold mb-8 text-center">About Mods Switcher</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  { title: '🎯 What is Mods Switcher?', content: 'Mods Switcher is a lightweight utility designed specifically for GTA5 and RDR2 players who want hassle-free mod management. Instead of manually renaming files or moving folders, our tool provides a simple on/off switch for your entire mod collection.' },
-                  { title: '🔧 How it Works', content: 'The tool works by temporarily renaming your mod files when you want to disable them, and restoring their original names when you want to enable them. This method is completely safe and reversible - your mods are never deleted or permanently modified.' },
-                  { title: '🎮 Perfect for Online Play', content: 'Want to switch between modded single-player and clean online gameplay? Mods Switcher makes this transition seamless. Disable all mods with one click before going online, then re-enable them instantly when you\'re back to single-player.' },
-                  { title: '💡 Why Choose Our Tool?', content: 'Unlike complex mod managers with dozens of features you don\'t need, Mods Switcher focuses on doing one thing perfectly: turning your mods on or off quickly and safely. No learning curve, no complicated setup - just install and use.' },
-                  { title: '🛡️ Safety First', content: 'We understand how valuable your mod collection is. That\'s why our tool uses non-destructive methods to manage your mods. Even if something goes wrong, your original mod files remain intact and can be easily restored.' },
-                  { title: '🚀 Future Updates', content: 'We\'re constantly working to improve Mods Switcher based on user feedback. Future updates may include individual mod selection, backup creation, and support for additional games. Stay tuned!' }
-                ].map((item, index) => (
-                  <div key={index} className="bg-white bg-opacity-10 p-6 rounded-2xl border border-white border-opacity-20">
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                    <p className="opacity-90 leading-relaxed">{item.content}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+            <!-- About Section -->
+            <div class="about-section" id="about" style="display: none;">
+                <h2>About Mods Switcher</h2>
+                <div class="about-content">
+                    <div class="about-card">
+                        <h3>🎯 What is Mods Switcher?</h3>
+                        <p>Mods Switcher is a lightweight utility designed specifically for GTA5 and RDR2 players who want hassle-free mod management. Instead of manually renaming files or moving folders, our tool provides a simple on/off switch for your entire mod collection.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🔧 How it Works</h3>
+                        <p>The tool works by temporarily renaming your mod files when you want to disable them, and restoring their original names when you want to enable them. This method is completely safe and reversible - your mods are never deleted or permanently modified.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🎮 Perfect for Online Play</h3>
+                        <p>Want to switch between modded single-player and clean online gameplay? Mods Switcher makes this transition seamless. Disable all mods with one click before going online, then re-enable them instantly when you're back to single-player.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>💡 Why Choose Our Tool?</h3>
+                        <p>Unlike complex mod managers with dozens of features you don't need, Mods Switcher focuses on doing one thing perfectly: turning your mods on or off quickly and safely. No learning curve, no complicated setup - just install and use.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🛡️ Safety First</h3>
+                        <p>We understand how valuable your mod collection is. That's why our tool uses non-destructive methods to manage your mods. Even if something goes wrong, your original mod files remain intact and can be easily restored.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>🚀 Future Updates</h3>
+                        <p>We're constantly working to improve Mods Switcher based on user feedback. Future updates may include individual mod selection, backup creation, and support for additional games. Stay tuned!</p>
+                    </div>
+                </div>
+            </div>
 
-          {/* Comments Section with CommentBox.io */}
-          <section className="bg-white rounded-3xl p-12 mb-12 shadow-2xl">
-            <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">💬 User Comments & Feedback</h2>
-            <CommentBoxComponent />
-          </section>
+            <!-- Comments Section -->
+            <div class="comments-section" id="comments">
+                <h2>💬 User Comments & Feedback</h2>
+                
+                <div class="comment-form">
+                    <h3>Leave a Comment</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label for="userName">Name:</label>
+                            <input type="text" id="userName" name="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Email (optional):</label>
+                            <input type="email" id="userEmail" name="userEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="commentText">Comment:</label>
+                            <textarea id="commentText" name="commentText" placeholder="Share your experience with Mods Switcher..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Post Comment</button>
+                    </form>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">John_Gamer</span>
+                            <span class="comment-date">2 days ago</span>
+                        </div>
+                        <div class="comment-text">This tool is exactly what I needed! So simple to use and works perfectly with both GTA5 and RDR2. Finally I can switch between online and modded gameplay without the hassle.</div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">ModEnthusiast22</span>
+                            <span class="comment-date">5 days ago</span>
+                        </div>
+                        <div class="comment-text">Love how lightweight this is compared to other mod managers. Does exactly what it says - no bloat, no complicated features I don't need. 5 stars!</div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">RedDeadFan</span>
+                            <span class="comment-date">1 week ago</span>
+                        </div>
+                        <div class="comment-text">Been using this for RDR2 and it's a game changer. The one-click toggle is so convenient, especially when friends want to play online suddenly.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Mods Switcher for GTA5/RDR2. All rights reserved. | <a href="#" style="color: white;">Privacy Policy</a> | <a href="#" style="color: white;">Terms of Service</a></p>
         </div>
-      </main>
+    </footer>
 
-      {/* Footer */}
-      <footer className="bg-black bg-opacity-20 text-white text-center py-8 mt-12">
-        <div className="max-w-6xl mx-auto px-5">
-          <p>&copy; 2025 Mods Switcher for GTA5/RDR2. All rights reserved. | <a href="#" className="text-white hover:opacity-80">Privacy Policy</a> | <a href="#" className="text-white hover:opacity-80">Terms of Service</a></p>
-        </div>
-      </footer>
-
-      <style jsx>{`
-        @keyframes slide-in-right {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
+    <script>
+        // Download simulation function without counter increment
+        function startDownload(platform) {
+            const downloadButtons = document.getElementById('downloadButtons');
+            const downloadProgress = document.getElementById('downloadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const downloadStatus = document.getElementById('downloadStatus');
+            
+            // Show download notification
+            showDownloadNotification();
+            
+            // Hide buttons and show progress
+            downloadButtons.style.display = 'none';
+            downloadProgress.style.display = 'block';
+            downloadStatus.textContent = `Preparing Mods Switcher download...`;
+            downloadStatus.style.color = '#667eea';
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                
+                if (progress < 30) {
+                    downloadStatus.textContent = 'Initializing download...';
+                } else if (progress < 60) {
+                    downloadStatus.textContent = 'Downloading Mods Switcher...';
+                } else if (progress < 90) {
+                    downloadStatus.textContent = 'Finalizing installation package...';
+                } else if (progress === 100) {
+                    downloadStatus.textContent = '✅ Download completed successfully!';
+                    downloadStatus.style.color = '#28a745';
+                    clearInterval(interval);
+                    
+                    // Create and trigger download of a dummy file
+                    const link = document.createElement('a');
+                    link.href = 'ModsSwitcher.rar';
+                    link.download = `ModsSwitcher.rar`;
+                    link.click();
+                    
+                    setTimeout(() => {
+                        downloadButtons.style.display = 'block';
+                        downloadProgress.style.display = 'none';
+                        progressBar.style.width = '0%';
+                        downloadStatus.textContent = '';
+                    }, 3000);
+                }
+            }, 100);
         }
-        .animate-slide-in-right {
-          animation: slide-in-right 0.5s ease-out;
-        }
-      `}</style>
-    </div>
-  );
-};
 
-export default ModsSwitcher;
+        // Show download notification
+        function showDownloadNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.5s ease-out reverse';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.animation = 'slideIn 0.5s ease-out';
+                }, 500);
+            }, 3000);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Hide all sections first
+                    document.querySelectorAll('.about-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show target section if it's about
+                    if (this.getAttribute('href') === '#about') {
+                        target.style.display = 'block';
+                    }
+                    
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Comment form handling
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userName = document.getElementById('userName').value;
+            const commentText = document.getElementById('commentText').value;
+            
+            if (userName && commentText) {
+                addComment(userName, commentText);
+                this.reset();
+            }
+        });
+
+        function addComment(name, text) {
+            const commentsList = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            
+            const now = new Date();
+            const timeAgo = 'Just now';
+            
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(name)}</span>
+                    <span class="comment-date">${timeAgo}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(text)}</div>
+            `;
+            
+            commentsList.insertBefore(newComment, commentsList.firstChild);
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>
