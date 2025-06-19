@@ -331,12 +331,6 @@
             padding: 2rem;
             border-radius: 15px;
             margin-bottom: 2rem;
-            border: 2px solid #e9ecef;
-            transition: border-color 0.3s ease;
-        }
-
-        .comment-form:focus-within {
-            border-color: #667eea;
         }
 
         .form-group {
@@ -357,14 +351,13 @@
             border: 2px solid #e9ecef;
             border-radius: 8px;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: border-color 0.3s ease;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .form-group textarea {
@@ -381,23 +374,11 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
         .submit-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
         }
 
         .comments-list {
@@ -410,22 +391,6 @@
             border-radius: 10px;
             margin-bottom: 1rem;
             border-left: 4px solid #667eea;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.5s ease forwards;
-        }
-
-        .comment:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .comment-header {
@@ -438,33 +403,16 @@
         .comment-author {
             font-weight: bold;
             color: #667eea;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .comment-author::before {
-            content: "👤";
-            font-size: 0.9rem;
         }
 
         .comment-date {
             color: #666;
             font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .comment-date::before {
-            content: "🕒";
-            font-size: 0.8rem;
         }
 
         .comment-text {
             color: #333;
             line-height: 1.6;
-            margin-left: 1.5rem;
         }
 
         .no-comments {
@@ -472,61 +420,6 @@
             color: #666;
             font-style: italic;
             padding: 2rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 2px dashed #ddd;
-        }
-
-        .comments-count {
-            background: #667eea;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-            display: inline-block;
-        }
-
-        .form-success {
-            background: #d4edda;
-            color: #155724;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid #c3e6cb;
-            display: none;
-        }
-
-        .comment-actions {
-            margin-top: 0.5rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .like-btn, .reply-btn {
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .like-btn:hover, .reply-btn:hover {
-            color: #667eea;
-        }
-
-        .like-btn.liked {
-            color: #e74c3c;
-        }
-
-        .comment-id {
-            font-size: 0.8rem;
-            color: #999;
-            margin-left: auto;
         }
     </style>
 </head>
@@ -539,7 +432,6 @@
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank">Support</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#comments">Comments</a></li>
             </ul>
         </nav>
     </header>
@@ -645,38 +537,51 @@
 
             <!-- Comments Section -->
             <div class="comments-section" id="comments">
-                <h2>💬 User Comments & Feedback 
-                    <span class="comments-count" id="commentsCount">3 comments</span>
-                </h2>
-                
-                <div class="form-success" id="formSuccess">
-                    ✅ Your comment has been posted successfully!
-                </div>
+                <h2>💬 User Comments & Feedback</h2>
                 
                 <div class="comment-form">
                     <h3>Leave a Comment</h3>
                     <form id="commentForm">
                         <div class="form-group">
-                            <label for="userName">Name: <span style="color: red;">*</span></label>
-                            <input type="text" id="userName" name="userName" required placeholder="Enter your name">
+                            <label for="userName">Name:</label>
+                            <input type="text" id="userName" name="userName" required>
                         </div>
                         <div class="form-group">
                             <label for="userEmail">Email (optional):</label>
-                            <input type="email" id="userEmail" name="userEmail" placeholder="your.email@example.com">
+                            <input type="email" id="userEmail" name="userEmail">
                         </div>
                         <div class="form-group">
-                            <label for="commentText">Comment: <span style="color: red;">*</span></label>
-                            <textarea id="commentText" name="commentText" placeholder="Share your experience with Mods Switcher..." required maxlength="500"></textarea>
-                            <div style="text-align: right; color: #666; font-size: 0.9rem; margin-top: 0.3rem;">
-                                <span id="charCount">0</span>/500 characters
-                            </div>
+                            <label for="commentText">Comment:</label>
+                            <textarea id="commentText" name="commentText" placeholder="Share your experience with Mods Switcher..." required></textarea>
                         </div>
-                        <button type="submit" class="submit-btn" id="submitBtn">Post Comment</button>
+                        <button type="submit" class="submit-btn">Post Comment</button>
                     </form>
                 </div>
 
                 <div class="comments-list" id="commentsList">
-                    <!-- Initial comments will be loaded here -->
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">John_Gamer</span>
+                            <span class="comment-date">2 days ago</span>
+                        </div>
+                        <div class="comment-text">This tool is exactly what I needed! So simple to use and works perfectly with both GTA5 and RDR2. Finally I can switch between online and modded gameplay without the hassle.</div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">ModEnthusiast22</span>
+                            <span class="comment-date">5 days ago</span>
+                        </div>
+                        <div class="comment-text">Love how lightweight this is compared to other mod managers. Does exactly what it says - no bloat, no complicated features I don't need. 5 stars!</div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">RedDeadFan</span>
+                            <span class="comment-date">1 week ago</span>
+                        </div>
+                        <div class="comment-text">Been using this for RDR2 and it's a game changer. The one-click toggle is so convenient, especially when friends want to play online suddenly.</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -689,140 +594,6 @@
     </footer>
 
     <script>
-        // Comments storage and management
-        class CommentsManager {
-            constructor() {
-                this.comments = [
-                    {
-                        id: 1,
-                        name: "John_Gamer",
-                        email: "",
-                        text: "This tool is exactly what I needed! So simple to use and works perfectly with both GTA5 and RDR2. Finally I can switch between online and modded gameplay without the hassle.",
-                        timestamp: Date.now() - (2 * 24 * 60 * 60 * 1000),
-                        likes: 12
-                    },
-                    {
-                        id: 2,
-                        name: "ModEnthusiast22",
-                        email: "",
-                        text: "Love how lightweight this is compared to other mod managers. Does exactly what it says - no bloat, no complicated features I don't need. 5 stars!",
-                        timestamp: Date.now() - (5 * 24 * 60 * 60 * 1000),
-                        likes: 8
-                    },
-                    {
-                        id: 3,
-                        name: "RedDeadFan",
-                        email: "",
-                        text: "Been using this for RDR2 and it's a game changer. The one-click toggle is so convenient, especially when friends want to play online suddenly.",
-                        timestamp: Date.now() - (7 * 24 * 60 * 60 * 1000),
-                        likes: 15
-                    }
-                ];
-                this.nextId = 4;
-                this.loadComments();
-            }
-
-            addComment(name, email, text) {
-                const comment = {
-                    id: this.nextId++,
-                    name: this.sanitizeInput(name),
-                    email: this.sanitizeInput(email),
-                    text: this.sanitizeInput(text),
-                    timestamp: Date.now(),
-                    likes: 0
-                };
-                
-                this.comments.unshift(comment);
-                this.updateCommentsDisplay();
-                this.updateCommentsCount();
-                return comment;
-            }
-
-            sanitizeInput(input) {
-                const div = document.createElement('div');
-                div.textContent = input;
-                return div.innerHTML;
-            }
-
-            formatTimeAgo(timestamp) {
-                const now = Date.now();
-                const diff = now - timestamp;
-                const seconds = Math.floor(diff / 1000);
-                const minutes = Math.floor(seconds / 60);
-                const hours = Math.floor(minutes / 60);
-                const days = Math.floor(hours / 24);
-
-                if (days > 0) {
-                    return `${days} day${days > 1 ? 's' : ''} ago`;
-                } else if (hours > 0) {
-                    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-                } else if (minutes > 0) {
-                    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-                } else {
-                    return 'Just now';
-                }
-            }
-
-            likeComment(commentId) {
-                const comment = this.comments.find(c => c.id === commentId);
-                if (comment) {
-                    comment.likes++;
-                    this.updateCommentsDisplay();
-                }
-            }
-
-            updateCommentsDisplay() {
-                const commentsList = document.getElementById('commentsList');
-                commentsList.innerHTML = '';
-
-                if (this.comments.length === 0) {
-                    commentsList.innerHTML = '<div class="no-comments">No comments yet. Be the first to share your experience!</div>';
-                    return;
-                }
-
-                this.comments.forEach((comment, index) => {
-                    const commentElement = document.createElement('div');
-                    commentElement.className = 'comment';
-                    commentElement.style.animationDelay = `${index * 0.1}s`;
-                    
-                    commentElement.innerHTML = `
-                        <div class="comment-header">
-                            <span class="comment-author">${comment.name}</span>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <span class="comment-date">${this.formatTimeAgo(comment.timestamp)}</span>
-                                <span class="comment-id">#${comment.id}</span>
-                            </div>
-                        </div>
-                        <div class="comment-text">${comment.text}</div>
-                        <div class="comment-actions">
-                            <button class="like-btn" onclick="commentsManager.likeComment(${comment.id})">
-                                ❤️ ${comment.likes} likes
-                            </button>
-                            <button class="reply-btn">
-                                💬 Reply
-                            </button>
-                        </div>
-                    `;
-                    
-                    commentsList.appendChild(commentElement);
-                });
-            }
-
-            updateCommentsCount() {
-                const countElement = document.getElementById('commentsCount');
-                const count = this.comments.length;
-                countElement.textContent = `${count} comment${count !== 1 ? 's' : ''}`;
-            }
-
-            loadComments() {
-                this.updateCommentsDisplay();
-                this.updateCommentsCount();
-            }
-        }
-
-        // Initialize comments manager
-        const commentsManager = new CommentsManager();
-
         // Download simulation function
         function startDownload(platform) {
             const downloadButtons = document.getElementById('downloadButtons');
@@ -854,6 +625,12 @@
                     downloadStatus.style.color = '#28a745';
                     clearInterval(interval);
                     
+                    // Create and trigger download of a dummy file
+                    const link = document.createElement('a');
+                    link.href = 'modsswitcher.rar';
+                    link.download = `modswitcher.rar`;
+                    link.click();
+                    
                     setTimeout(() => {
                         downloadButtons.style.display = 'block';
                         downloadProgress.style.display = 'none';
@@ -861,3 +638,130 @@
                         downloadStatus.textContent = '';
                     }, 3000);
                 }
+            }, 100);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Hide all sections first
+                    document.querySelectorAll('.about-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show target section if it's about
+                    if (this.getAttribute('href') === '#about') {
+                        target.style.display = 'block';
+                    }
+                    
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Comment form handling
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userName = document.getElementById('userName').value;
+            const commentText = document.getElementById('commentText').value;
+            
+            if (userName && commentText) {
+                addComment(userName, commentText);
+                this.reset();
+            }
+        });
+
+        function addComment(name, text) {
+            const commentsList = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            
+            const now = new Date();
+            const timeAgo = 'Just now';
+            
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(name)}</span>
+                    <span class="comment-date">${timeAgo}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(text)}</div>
+            `;
+            
+            // Add to top of comments list
+            commentsList.insertBefore(newComment, commentsList.firstChild);
+            
+            // Add animation
+            newComment.style.opacity = '0';
+            newComment.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                newComment.style.transition = 'all 0.3s ease';
+                newComment.style.opacity = '1';
+                newComment.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Add download counter animation
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                if (finalValue.includes('+') || finalValue.includes('★') || finalValue.includes('%')) {
+                    const numValue = parseFloat(finalValue);
+                    if (!isNaN(numValue)) {
+                        let currentValue = 0;
+                        const increment = numValue / 50;
+                        const timer = setInterval(() => {
+                            currentValue += increment;
+                            if (currentValue >= numValue) {
+                                stat.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                if (finalValue.includes('M+')) {
+                                    stat.textContent = (currentValue / 1000000).toFixed(1) + 'M+';
+                                } else if (finalValue.includes('★')) {
+                                    stat.textContent = currentValue.toFixed(1) + '★';
+                                } else if (finalValue.includes('%')) {
+                                    stat.textContent = currentValue.toFixed(1) + '%';
+                                }
+                            }
+                        }, 20);
+                    }
+                }
+            });
+        }
+
+        // Trigger stats animation when they come into view
+        const statsElement = document.querySelector('.stats');
+        if (statsElement) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            observer.observe(statsElement);
+        }
+
+        // Add floating animation to feature cards
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
