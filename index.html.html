@@ -184,12 +184,40 @@
             padding: 2rem;
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: bold;
             display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .download-count-highlight {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            }
+            50% {
+                box-shadow: 0 15px 30px rgba(40, 167, 69, 0.6);
+            }
+            100% {
+                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            }
         }
 
         .download-info {
@@ -239,6 +267,31 @@
             transition: width 0.3s ease;
         }
 
+        .download-notification {
+            display: none;
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -250,6 +303,12 @@
             
             .download-section {
                 padding: 2rem;
+            }
+
+            .download-notification {
+                right: 10px;
+                left: 10px;
+                width: auto;
             }
         }
 
@@ -425,6 +484,16 @@
     </style>
 </head>
 <body>
+    <div class="download-notification" id="downloadNotification">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 1.5rem;">🎉</span>
+            <div>
+                <div style="font-weight: bold;">Download Started!</div>
+                <div style="font-size: 0.9rem;">Download count updated</div>
+            </div>
+        </div>
+    </div>
+
     <header>
         <nav class="container">
             <a href="#" class="logo">🎮 Mods Switcher</a>
@@ -444,6 +513,17 @@
         </section>
 
         <section class="container">
+            <div class="stats" id="stats">
+                <div class="stat-item download-count-highlight" id="downloadCountStat">
+                    <span class="stat-number" id="downloadCount">15,247</span>
+                    <span class="stat-label">Total Downloads</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">9.70MB</span>
+                    <span class="stat-label">File Size</span>
+                </div>
+            </div>
+
             <div class="download-section" id="download">
                 <h2>Download Mods Switcher</h2>
                 <p>Simple mod management for GTA5 and RDR2. Turn your mods on and off with just one click!</p>
@@ -595,12 +675,57 @@
     </footer>
 
     <script>
-        // Download simulation function
+        // Download counter management
+        let downloadCount = 15247; // Starting count
+
+        // Update the display of download count
+        function updateDownloadDisplay() {
+            const downloadCountElement = document.getElementById('downloadCount');
+            downloadCountElement.textContent = downloadCount.toLocaleString();
+        }
+
+        // Increment download count
+        function incrementDownloadCount() {
+            downloadCount++;
+            updateDownloadDisplay();
+            
+            // Animate the counter
+            const countElement = document.getElementById('downloadCount');
+            const statElement = document.getElementById('downloadCountStat');
+            
+            // Add glow effect
+            statElement.style.animation = 'none';
+            setTimeout(() => {
+                statElement.style.animation = 'pulse-green 1s ease-out';
+            }, 10);
+            
+            // Show notification
+            showDownloadNotification();
+        }
+
+        // Show download notification
+        function showDownloadNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.5s ease-out reverse';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                    notification.style.animation = 'slideIn 0.5s ease-out';
+                }, 500);
+            }, 3000);
+        }
+
+        // Download simulation function with counter increment
         function startDownload(platform) {
             const downloadButtons = document.getElementById('downloadButtons');
             const downloadProgress = document.getElementById('downloadProgress');
             const progressBar = document.getElementById('progressBar');
             const downloadStatus = document.getElementById('downloadStatus');
+            
+            // Increment download count immediately when download starts
+            incrementDownloadCount();
             
             // Hide buttons and show progress
             downloadButtons.style.display = 'none';
@@ -628,7 +753,7 @@
                     
                     // Create and trigger download of a dummy file
                     const link = document.createElement('a');
-                    link.href = 'ModsSwitcher.rar';
+                    link.href = 'data:application/octet-stream;base64,UEsDBBQAAAAIABYAQk0AAAAAAAAAAAAAAAAJAAAARm9sZGVyLnJhcgAAAABQSwECFAAUAAAACAAWAEJNAAAAAAAAAAAAAAAACQAAAAAAAAAAABAAAAAAAAAAUmFyAAAAAFBLBQYAAAAAAQABAAcAAAAAAAAAAAAAA';
                     link.download = `ModsSwitcher.rar`;
                     link.click();
                     
@@ -641,6 +766,11 @@
                 }
             }, 100);
         }
+
+        // Initialize download count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDownloadDisplay();
+        });
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -695,74 +825,19 @@
                 <div class="comment-text">${escapeHtml(text)}</div>
             `;
             
-            // Add to top of comments list
             commentsList.insertBefore(newComment, commentsList.firstChild);
-            
-            // Add animation
-            newComment.style.opacity = '0';
-            newComment.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                newComment.style.transition = 'all 0.3s ease';
-                newComment.style.opacity = '1';
-                newComment.style.transform = 'translateY(0)';
-            }, 100);
         }
 
         function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
         }
-
-        // Add download counter animation
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            statNumbers.forEach(stat => {
-                const finalValue = stat.textContent;
-                if (finalValue.includes('+') || finalValue.includes('★') || finalValue.includes('%')) {
-                    const numValue = parseFloat(finalValue);
-                    if (!isNaN(numValue)) {
-                        let currentValue = 0;
-                        const increment = numValue / 50;
-                        const timer = setInterval(() => {
-                            currentValue += increment;
-                            if (currentValue >= numValue) {
-                                stat.textContent = finalValue;
-                                clearInterval(timer);
-                            } else {
-                                if (finalValue.includes('M+')) {
-                                    stat.textContent = (currentValue / 1000000).toFixed(1) + 'M+';
-                                } else if (finalValue.includes('★')) {
-                                    stat.textContent = currentValue.toFixed(1) + '★';
-                                } else if (finalValue.includes('%')) {
-                                    stat.textContent = currentValue.toFixed(1) + '%';
-                                }
-                            }
-                        }, 20);
-                    }
-                }
-            });
-        }
-
-        // Trigger stats animation when they come into view
-        const statsElement = document.querySelector('.stats');
-        if (statsElement) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        animateStats();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-
-            observer.observe(statsElement);
-        }
-
-        // Add floating animation to feature cards
-        document.querySelectorAll('.feature-card').forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-        });
     </script>
 </body>
 </html>
