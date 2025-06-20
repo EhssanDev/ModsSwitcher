@@ -442,23 +442,6 @@
             margin-top: 3rem;
         }
 
-        .download-progress {
-            display: none;
-            width: 100%;
-            height: 20px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
         .download-notification {
             display: none;
             position: fixed;
@@ -482,6 +465,10 @@
                 transform: translateX(0);
                 opacity: 1;
             }
+        }
+
+        .download-notification.show {
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -582,7 +569,7 @@
             <span style="font-size: 1.5rem;">🎉</span>
             <div>
                 <div style="font-weight: bold;">Download Started!</div>
-                <div style="font-size: 0.9rem;">Thank you for downloading</div>
+                <div style="font-size: 0.9rem;">ModSwitcher.rar is downloading...</div>
             </div>
         </div>
     </div>
@@ -613,7 +600,7 @@
         <section class="container">
             <div class="stats" id="stats">
                 <div class="stat-item download-count-highlight">
-                    <span class="stat-number" id="downloadCounter">5,000</span>
+                    <span class="stat-number">+5,000</span>
                     <span class="stat-label">Total Downloads</span>
                 </div>
                 <div class="stat-item">
@@ -629,17 +616,11 @@
                 <!-- Second Image: Download Section -->
                 <img src="demo.jpg" alt="Mods Switcher Demo in Action" class="feature-image">
                 
-                <div class="download-progress" id="downloadProgress">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                
                 <div id="downloadButtons">
-                    <button class="download-btn pulse" onclick="downloadFile()">
+                    <a href="ModSwitcher.rar" download="ModSwitcher.rar" class="download-btn pulse" onclick="showDownloadNotification()">
                         🪟 Download Mods Switcher
-                    </button>
+                    </a>
                 </div>
-                
-                <div id="downloadStatus" style="margin-top: 1rem; font-weight: bold;"></div>
             </div>
 
             <!-- YouTube Channel Section -->
@@ -775,37 +756,23 @@
     </script>
 
     <script>
-        // Variable to track download count
-        let downloadCount = 5000;
-
-        // Function to show download notification
         function showDownloadNotification() {
             const notification = document.getElementById('downloadNotification');
-            notification.style.display = 'block';
+            notification.classList.add('show');
             
+            // Hide notification after 5 seconds
             setTimeout(() => {
-                notification.style.display = 'none';
-            }, 4000);
+                notification.classList.remove('show');
+            }, 5000);
+            
+            // Update download count (you can remove this if you don't want to show count updates)
+            // This is just for visual effect
+            const countElement = document.querySelector('.stat-number');
+            if (countElement) {
+                const currentCount = parseInt(countElement.textContent.replace(/[^0-9]/g, ''));
+                countElement.textContent = `+${(currentCount + 1).toLocaleString()}`;
+            }
         }
-
-        // Function to update download counter
-        function updateDownloadCounter() {
-            downloadCount++;
-            document.getElementById('downloadCounter').textContent = downloadCount.toLocaleString();
-        }
-
-        // Main download function - actually downloads ModsSwitcher.rar
-        function downloadFile() {
-            // Show download notification
-            showDownloadNotification();
-            
-            // Update download counter
-            updateDownloadCounter();
-            
-            // Create a link element and trigger download
-            const link = document.createElement('a');
-            link.href = 'ModsSwitcher.rar'; // This should be the actual path to your file
-            link.download = 'ModsSwitcher.rar';
-            link.style.display = 'none';
-            
-            // Add to DOM,
+    </script>
+</body>
+</html>
