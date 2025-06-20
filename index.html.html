@@ -765,13 +765,8 @@
                 notification.classList.remove('show');
             }, 5000);
             
-            // Update download count (you can remove this if you don't want to show count updates)
-            // This is just for visual effect
-            const countElement = document.querySelector('.stat-number');
-            if (countElement) {
-                const currentCount = parseInt(countElement.textContent.replace(/[^0-9]/g, ''));
-                countElement.textContent = `+${(currentCount + 1).toLocaleString()}`;
-            }
+            // Removed the download count increment functionality
+            // The download count will now remain at +5,000 regardless of button clicks
         }
     </script>
 </body>
