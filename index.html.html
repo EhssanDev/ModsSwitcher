@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFH0FSLYYX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-MFH0FSLYYX');
+    </script>
+    
     <link rel="icon" href="favicon.ico" type="image/x-icon"><link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -813,14 +822,4 @@
             
             // Hide notification after 5 seconds
             setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
-        }
-
-        function showOpenSourceNotification() {
-            const notification = document.getElementById('downloadNotification');
-            notification.querySelector('.download-notification div div:first-child').textContent = 'Open Source Download Started!';
-            notification.querySelector('.download-notification div div:last-child').textContent = 'MSopensource.rar is downloading...';
-            notification.classList.add('show');
-            
-            // Hide notification after
+                notification.classList.
