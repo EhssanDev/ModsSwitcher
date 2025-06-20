@@ -271,6 +271,33 @@
             color: white;
         }
 
+        /* Open Source Button Styles */
+        .opensource-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+            font-weight: 600;
+        }
+
+        .opensource-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+            background: linear-gradient(45deg, #20c997, #28a745);
+        }
+
+        .opensource-btn:active {
+            transform: translateY(-1px);
+        }
+
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -620,6 +647,10 @@
                     <a href="ModsSwitcher.rar" download="ModsSwitcher.rar" class="download-btn pulse" onclick="showDownloadNotification()">
                         🪟 Download Mods Switcher
                     </a>
+                    <br>
+                    <a href="MSopensource.rar" download="MSopensource.rar" class="opensource-btn" onclick="showOpenSourceNotification()">
+                        📂 Download Open Source
+                    </a>
                 </div>
             </div>
 
@@ -764,10 +795,16 @@
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 5000);
-            
-            // Removed the download count increment functionality
-            // The download count will now remain at +5,000 regardless of button clicks
         }
-    </script>
-</body>
-</html>
+
+        function showOpenSourceNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.querySelector('.download-notification div div:first-child').textContent = 'Open Source Download Started!';
+            notification.querySelector('.download-notification div div:last-child').textContent = 'MSopensource.rar is downloading...';
+            notification.classList.add('show');
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                // Reset notification text for next download
+                setTimeout(() => {
