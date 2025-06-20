@@ -613,7 +613,7 @@
         <section class="container">
             <div class="stats" id="stats">
                 <div class="stat-item download-count-highlight">
-                    <span class="stat-number">+5,000</span>
+                    <span class="stat-number" id="downloadCounter">5,000</span>
                     <span class="stat-label">Total Downloads</span>
                 </div>
                 <div class="stat-item">
@@ -634,7 +634,7 @@
                 </div>
                 
                 <div id="downloadButtons">
-                    <button class="download-btn pulse" onclick="startDownload('windows')">
+                    <button class="download-btn pulse" onclick="downloadFile()">
                         🪟 Download Mods Switcher
                     </button>
                 </div>
@@ -775,35 +775,37 @@
     </script>
 
     <script>
-        // Download simulation function without counter increment
-        function startDownload(platform) {
-            const downloadButtons = document.getElementById('downloadButtons');
-            const downloadProgress = document.getElementById('downloadProgress');
-            const progressBar = document.getElementById('progressBar');
-            const downloadStatus = document.getElementById('downloadStatus');
+        // Variable to track download count
+        let downloadCount = 5000;
+
+        // Function to show download notification
+        function showDownloadNotification() {
+            const notification = document.getElementById('downloadNotification');
+            notification.style.display = 'block';
             
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 4000);
+        }
+
+        // Function to update download counter
+        function updateDownloadCounter() {
+            downloadCount++;
+            document.getElementById('downloadCounter').textContent = downloadCount.toLocaleString();
+        }
+
+        // Main download function - actually downloads ModsSwitcher.rar
+        function downloadFile() {
             // Show download notification
             showDownloadNotification();
             
-            // Hide buttons and show progress
-            downloadButtons.style.display = 'none';
-            downloadProgress.style.display = 'block';
-            downloadStatus.textContent = `Preparing Mods Switcher download...`;
-            downloadStatus.style.color = '#667eea';
+            // Update download counter
+            updateDownloadCounter();
             
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 100) progress = 100;
-                
-                progressBar.style.width = progress + '%';
-                
-                if (progress < 30) {
-                    downloadStatus.textContent = 'Initializing download...';
-                } else if (progress < 60) {
-                    downloadStatus.textContent = 'Downloading Mods Switcher...';
-                } else if (progress < 90) {
-                    downloadStatus.textContent = 'Finalizing installation package...';
-                } else if (progress === 100) {
-                    downloadStatus.textContent = '✅ Download completed successfully!';
-                    downloadStatus
+            // Create a link element and trigger download
+            const link = document.createElement('a');
+            link.href = 'ModsSwitcher.rar'; // This should be the actual path to your file
+            link.download = 'ModsSwitcher.rar';
+            link.style.display = 'none';
+            
+            // Add to DOM,
