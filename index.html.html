@@ -126,6 +126,35 @@
             box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
         }
 
+        /* Instagram Button Styles */
+        .instagram-btn {
+            background: linear-gradient(45deg, #E4405F, #C13584, #833AB4);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem;
+            box-shadow: 0 10px 20px rgba(228, 64, 95, 0.3);
+            font-weight: 600;
+        }
+
+        .instagram-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(228, 64, 95, 0.4);
+            background: linear-gradient(45deg, #C13584, #E4405F, #833AB4);
+        }
+
+        .instagram-btn:active {
+            transform: translateY(-1px);
+        }
+
         /* Ko-fi Donation Section */
         .donation-section {
             background: linear-gradient(135deg, rgba(255, 205, 84, 0.15) 0%, rgba(255, 205, 84, 0.08) 100%);
@@ -546,47 +575,57 @@
             }
         }
 
-        /* About Section Styles */
-        .about-section {
-            background: rgba(255, 255, 255, 0.1);
+        /* Instagram Section Styles */
+        .instagram-section {
+            background: linear-gradient(135deg, rgba(228, 64, 95, 0.15) 0%, rgba(193, 53, 132, 0.15) 50%, rgba(131, 58, 180, 0.15) 100%);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 3rem;
-            margin: 3rem 0;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .about-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .about-card {
-            background: rgba(255, 255, 255, 0.1);
             padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid rgba(228, 64, 95, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .about-card h3 {
-            font-size: 1.5rem;
+        .instagram-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(228, 64, 95, 0.1) 0%, 
+                rgba(193, 53, 132, 0.1) 33%, 
+                rgba(131, 58, 180, 0.1) 66%, 
+                rgba(228, 64, 95, 0.1) 100%);
+            background-size: 200% 200%;
+            animation: instagramGlow 4s ease infinite;
+            pointer-events: none;
+        }
+
+        @keyframes instagramGlow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .instagram-section h2 {
+            color: white;
             margin-bottom: 1rem;
-            color: #fff;
+            font-size: 2rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .about-card p {
-            line-height: 1.6;
-            opacity: 0.9;
+        .instagram-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
         }
     </style>
 </head>
@@ -608,7 +647,7 @@
                 <li><a href="#features">Features</a></li>
                 <li><a href="#download">Download</a></li>
                 <li><a href="#donation">Donation</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#instagram">Instagram</a></li>
                 <li><a href="#youtube">YouTube</a></li>
                 <li><a href="#comments">Comments</a></li>
             </ul>
@@ -652,6 +691,18 @@
                         📂 Download Open Source
                     </a>
                 </div>
+            </div>
+
+            <!-- Instagram Section -->
+            <div class="instagram-section" id="instagram">
+                <h2>📸 Follow Me on Instagram</h2>
+                <p>
+                    Stay updated with the latest development progress, behind-the-scenes content, and connect with me on Instagram!
+                </p>
+                <a href="https://www.instagram.com/ehssan.dev" target="_blank" class="instagram-btn">
+                    <span style="font-size: 1.3rem;">📸</span>
+                    Follow @ehssan.dev
+                </a>
             </div>
 
             <!-- YouTube Channel Section -->
@@ -722,37 +773,6 @@
                 </div>
             </div>
 
-            <!-- About Section -->
-            <div class="about-section" id="about" style="display: none;">
-                <h2>About Mods Switcher</h2>
-                <div class="about-content">
-                    <div class="about-card">
-                        <h3>🎯 What is Mods Switcher?</h3>
-                        <p>Mods Switcher is a lightweight utility designed specifically for GTA5 and RDR2 players who want hassle-free mod management. Instead of manually renaming files or moving folders, our tool provides a simple on/off switch for your entire mod collection.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>🔧 How it Works</h3>
-                        <p>The tool works by temporarily renaming your mod files when you want to disable them, and restoring their original names when you want to enable them. This method is completely safe and reversible - your mods are never deleted or permanently modified.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>🎮 Perfect for Online Play</h3>
-                        <p>Want to switch between modded single-player and clean online gameplay? Mods Switcher makes this transition seamless. Disable all mods with one click before going online, then re-enable them instantly when you're back to single-player.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>💡 Why Choose Our Tool?</h3>
-                        <p>Unlike complex mod managers with dozens of features you don't need, Mods Switcher focuses on doing one thing perfectly: turning your mods on or off quickly and safely. No learning curve, no complicated setup - just install and use.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>🛡️ Safety First</h3>
-                        <p>We understand how valuable your mod collection is. That's why our tool uses non-destructive methods to manage your mods. Even if something goes wrong, your original mod files remain intact and can be easily restored.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>🚀 Future Updates</h3>
-                        <p>We're constantly working to improve Mods Switcher based on user feedback. Future updates may include individual mod selection, backup creation, and support for additional games. Stay tuned!</p>
-                    </div>
-                </div>
-            </div>
-
             <!-- Enhanced Comments Section -->
             <div class="comments-section" id="comments">
                 <h2>💬 Community Comments</h2>
@@ -803,8 +823,4 @@
             notification.querySelector('.download-notification div div:last-child').textContent = 'MSopensource.rar is downloading...';
             notification.classList.add('show');
             
-            // Hide notification after 5 seconds
-            setTimeout(() => {
-                notification.classList.remove('show');
-                // Reset notification text for next download
-                setTimeout(() => {
+            // Hide notification after
