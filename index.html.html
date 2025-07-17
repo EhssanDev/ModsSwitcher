@@ -1,825 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFH0FSLYYX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-MFH0FSLYYX');
-    </script>
-    
-    <link rel="icon" href="favicon.ico" type="image/x-icon"><link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mods Switcher for GTA5/RDR2 - Download Now</title>
+    <title>Some Day</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            opacity: 0.8;
-        }
-
-        main {
-            margin-top: 80px;
-            padding: 2rem 0;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* YouTube Channel Section */
-        .youtube-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .youtube-btn {
-            background: linear-gradient(45deg, #ff0000, #cc0000);
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 1rem;
-            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
-        }
-
-        .youtube-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
-        }
-
-        /* Instagram Button Styles */
-        .instagram-btn {
-            background: linear-gradient(45deg, #E4405F, #C13584, #833AB4);
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 1rem;
-            box-shadow: 0 10px 20px rgba(228, 64, 95, 0.3);
-            font-weight: 600;
-        }
-
-        .instagram-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(228, 64, 95, 0.4);
-            background: linear-gradient(45deg, #C13584, #E4405F, #833AB4);
-        }
-
-        .instagram-btn:active {
-            transform: translateY(-1px);
-        }
-
-        /* Ko-fi Donation Section */
-        .donation-section {
-            background: linear-gradient(135deg, rgba(255, 205, 84, 0.15) 0%, rgba(255, 205, 84, 0.08) 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            border: 2px solid rgba(255, 205, 84, 0.3);
-            position: relative;
+            font-family: 'Inter', sans-serif;
             overflow: hidden;
         }
-
-        .donation-section::before {
+        
+        body::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, 
-                rgba(255, 205, 84, 0.1) 0%, 
-                rgba(255, 87, 51, 0.1) 50%, 
-                rgba(255, 205, 84, 0.1) 100%);
-            background-size: 200% 200%;
-            animation: donationGlow 4s ease infinite;
+            background: radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+                        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
             pointer-events: none;
         }
-
-        @keyframes donationGlow {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .donation-section h2 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .donation-section p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+        
+        .text-container {
             position: relative;
             z-index: 1;
         }
-
-        .kofi-btn {
-            background: linear-gradient(45deg, #ff5f5f, #ff3a3a);
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 1rem;
-            box-shadow: 0 10px 20px rgba(255, 95, 95, 0.3);
-            position: relative;
-            z-index: 1;
-            font-weight: 600;
-        }
-
-        .kofi-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(255, 95, 95, 0.4);
-            background: linear-gradient(45deg, #ff4444, #ff2222);
-        }
-
-        .kofi-btn:active {
-            transform: translateY(-1px);
-        }
-
-        /* Image Styles */
-        .hero-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            margin: 2rem 0;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .feature-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            margin: 1rem 0;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .download-section {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        
+        .text {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #ffffff;
             text-align: center;
+            letter-spacing: 0.05em;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s ease-out forwards;
         }
-
-        .download-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 1rem 3rem;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 1rem;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        
+        .text::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            animation: expandLine 2s ease-out 0.5s forwards;
+            transform-origin: center;
+            scale: 0;
         }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .download-btn:active {
-            transform: translateY(-1px);
+        
+        @keyframes expandLine {
+            to {
+                scale: 1;
+            }
         }
-
-        .secondary-btn {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
-
-        .secondary-btn:hover {
-            background: #667eea;
-            color: white;
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
         }
-
-        /* Open Source Button Styles */
-        .opensource-btn {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            padding: 1rem 3rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 0.5rem;
-            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
-            font-weight: 600;
+        
+        .particle:nth-child(1) {
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
         }
-
-        .opensource-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
-            background: linear-gradient(45deg, #20c997, #28a745);
+        
+        .particle:nth-child(2) {
+            left: 85%;
+            top: 30%;
+            animation-delay: 1s;
         }
-
-        .opensource-btn:active {
-            transform: translateY(-1px);
+        
+        .particle:nth-child(3) {
+            left: 70%;
+            top: 80%;
+            animation-delay: 2s;
         }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
+        
+        .particle:nth-child(4) {
+            left: 20%;
+            top: 70%;
+            animation-delay: 3s;
         }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
+        
+        .particle:nth-child(5) {
+            left: 50%;
+            top: 15%;
+            animation-delay: 4s;
         }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            text-align: center;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .download-count-highlight {
-            background: linear-gradient(45deg, #28a745, #20c997);
-            animation: pulse-green 2s infinite;
-        }
-
-        @keyframes pulse-green {
-            0% {
-                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.4;
             }
             50% {
-                box-shadow: 0 15px 30px rgba(40, 167, 69, 0.6);
-            }
-            100% {
-                box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
             }
         }
-
-        .download-info {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .system-requirements {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .requirement-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            color: white;
-        }
-
-        /* Enhanced Comments Section Styles */
-        .comments-section {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 3rem;
-            margin: 3rem 0;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .comments-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, 
-                rgba(102, 126, 234, 0.1) 0%, 
-                rgba(118, 75, 162, 0.1) 25%, 
-                rgba(102, 126, 234, 0.1) 50%, 
-                rgba(118, 75, 162, 0.1) 75%, 
-                rgba(102, 126, 234, 0.1) 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
-            pointer-events: none;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .comments-section h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        .giscus {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
-        }
-
-        footer {
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-
-        .download-notification {
-            display: none;
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            background: linear-gradient(45deg, #28a745, #20c997);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .download-notification.show {
-            display: block;
-        }
-
+        
         @media (max-width: 768px) {
-            .hero h1 {
+            .text {
                 font-size: 2.5rem;
             }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .download-section {
-                padding: 2rem;
-            }
-
-            .download-notification {
-                right: 10px;
-                left: 10px;
-                width: auto;
-            }
-
-            .comments-section {
-                padding: 2rem;
-            }
-
-            .giscus {
-                padding: 1.5rem;
-            }
-
-            .youtube-section, .donation-section {
-                padding: 1.5rem;
-            }
         }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        
+        @media (max-width: 480px) {
+            .text {
+                font-size: 2rem;
             }
-            50% {
-                box-shadow: 0 15px 30px rgba(102, 126, 234, 0.6);
-            }
-            100% {
-                box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-            }
-        }
-
-        /* Instagram Section Styles */
-        .instagram-section {
-            background: linear-gradient(135deg, rgba(228, 64, 95, 0.15) 0%, rgba(193, 53, 132, 0.15) 50%, rgba(131, 58, 180, 0.15) 100%);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            border: 2px solid rgba(228, 64, 95, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .instagram-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, 
-                rgba(228, 64, 95, 0.1) 0%, 
-                rgba(193, 53, 132, 0.1) 33%, 
-                rgba(131, 58, 180, 0.1) 66%, 
-                rgba(228, 64, 95, 0.1) 100%);
-            background-size: 200% 200%;
-            animation: instagramGlow 4s ease infinite;
-            pointer-events: none;
-        }
-
-        @keyframes instagramGlow {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .instagram-section h2 {
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-            position: relative;
-            z-index: 1;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .instagram-section p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <div class="download-notification" id="downloadNotification">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 1.5rem;">🎉</span>
-            <div>
-                <div style="font-weight: bold;">Download Started!</div>
-                <div style="font-size: 0.9rem;">ModsSwitcher is downloading...</div>
-            </div>
-        </div>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
-
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">🎮 Mods Switcher</a>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="#donation">Donation</a></li>
-                <li><a href="#instagram">Instagram</a></li>
-                <li><a href="#youtube">YouTube</a></li>
-                <li><a href="#comments">Comments</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero container">
-            <h1>Mods Switcher for GTA5/RDR2</h1>
-            <p>Simply turn your mods on or off for Grand Theft Auto 5 and Red Dead Redemption 2. No complicated setup - just easy mod management with the click of a button.</p>
-            
-            <!-- First Image: Hero Section -->
-            <img src="screenshot1.jpg" alt="Mods Switcher Interface Screenshot" class="hero-image">
-        </section>
-
-        <section class="container">
-            <div class="stats" id="stats">
-                <div class="stat-item download-count-highlight">
-                    <span class="stat-number">+5,000</span>
-                    <span class="stat-label">Total Downloads</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">9.70MB</span>
-                    <span class="stat-label">File Size</span>
-                </div>
-            </div>
-
-            <div class="download-section" id="download">
-                <h2>Download Mods Switcher</h2>
-                <p>Simple mod management for GTA5 and RDR2. Turn your mods on and off with just one click!</p>
-                
-                <!-- Second Image: Download Section -->
-                <img src="demo.jpg" alt="Mods Switcher Demo in Action" class="feature-image">
-                
-                <div id="downloadButtons">
-                    <a href="ModsSwitcher.rar" download="ModsSwitcher.rar" class="download-btn pulse" onclick="showDownloadNotification()">
-                        🪟 Download Mods Switcher
-                    </a>
-                    <br>
-                    <a href="MSopensource.rar" download="MSopensource.rar" class="opensource-btn" onclick="showOpenSourceNotification()">
-                        📂 Download Open Source
-                    </a>
-                </div>
-            </div>
-
-            <!-- Instagram Section -->
-            <div class="instagram-section" id="instagram">
-                <h2>📸 Follow Me on Instagram</h2>
-                <p>
-                    Stay updated with the latest development progress, behind-the-scenes content, and connect with me on Instagram!
-                </p>
-                <a href="https://www.instagram.com/ehssan.dev" target="_blank" class="instagram-btn">
-                    <span style="font-size: 1.3rem;">📸</span>
-                    Follow @ehssan.dev
-                </a>
-            </div>
-
-            <!-- YouTube Channel Section -->
-            <div class="youtube-section" id="youtube">
-                <h2 style="color: white; margin-bottom: 1rem; font-size: 2rem;">📺 Follow My YouTube Channel</h2>
-                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem; font-size: 1.1rem;">
-                    Subscribe for tutorials, updates, and more gaming content!
-                </p>
-                <a href="https://www.youtube.com/@EhssanDev" target="_blank" class="youtube-btn">
-                    <span style="font-size: 1.3rem;">📺</span>
-                    Subscribe to EhssanDev
-                </a>
-            </div>
-
-            <!-- Ko-fi Donation Section -->
-            <div class="donation-section" id="donation">
-                <h2>☕ Support My Work</h2>
-                <p>
-                    If you find Mods Switcher helpful, consider buying me a coffee! Your support helps me continue developing free tools and creating content for the gaming community.
-                </p>
-                <a href="https://ko-fi.com/ehssandev#checkoutModal" target="_blank" class="kofi-btn">
-                    <span style="font-size: 1.3rem;">☕</span>
-                    Buy Me a Coffee
-                </a>
-            </div>
-
-            <div class="download-info">
-                <h3 style="color: white; margin-bottom: 1rem;">📋 System Requirements</h3>
-                <div class="system-requirements">
-                    <div class="requirement-item">
-                        <strong>Windows</strong><br>
-                        Windows 10 or later<br>
-                        GTA5 and/or RDR2 installed
-                    </div>
-                </div>
-            </div>
-
-            <div class="features" id="features">
-                <div class="feature-card">
-                    <div class="feature-icon">🎮</div>
-                    <h3>Multi-Game Support</h3>
-                    <p>Works with both GTA5 and RDR2. One simple tool for both games.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔘</div>
-                    <h3>Simple On/Off Toggle</h3>
-                    <p>Turn your mods on or off with a single click. No complicated configurations needed.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Instant Results</h3>
-                    <p>Changes take effect immediately. No restart required, just toggle and play.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Easy to Use</h3>
-                    <p>Clean, simple interface. Perfect for beginners who just want mods on or off.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3>Safe Operation</h3>
-                    <p>Never permanently deletes your mods. Just enables or disables them safely.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Lightweight</h3>
-                    <p>Tiny footprint, minimal system resources. Just does what you need, nothing more.</p>
-                </div>
-            </div>
-
-            <!-- Enhanced Comments Section -->
-            <div class="comments-section" id="comments">
-                <h2>💬 Community Comments</h2>
-                <div class="giscus">
-                    <!-- Giscus comments will be loaded here -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Mods Switcher for GTA5/RDR2. All rights reserved. | <a href="#" style="color: white;">Privacy Policy</a> | <a href="#" style="color: white;">Terms of Service</a></p>
-        </div>
-    </footer>
-
-    <!-- Giscus Comments Script -->
-    <script src="https://giscus.app/client.js"
-            data-repo="EhssanDev/ModsSwitcher"
-            data-repo-id="R_kgDOO-CZzg"
-            data-category="General"
-            data-category-id="DIC_kwDOO-CZzs4Crtzb"
-            data-mapping="pathname"
-            data-strict="0"
-            data-reactions-enabled="1"
-            data-emit-metadata="0"
-            data-input-position="bottom"
-            data-theme="catppuccin_macchiato"
-            data-lang="en"
-            crossorigin="anonymous"
-            async>
-    </script>
-
-    <script>
-        function showDownloadNotification() {
-            const notification = document.getElementById('downloadNotification');
-            notification.classList.add('show');
-            
-            // Hide notification after 5 seconds
-            setTimeout(() => {
-                notification.classList.
+    
+    <div class="text-container">
+        <div class="text">some day</div>
+    </div>
+</body>
+</html>
